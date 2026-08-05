@@ -5,9 +5,10 @@
 #include <limits>
 #include <stdexcept>
 
-namespace htpste {
-
-TEST(PositionTest, RepresentsLongAndShortQuantitiesWithoutPrices) {
+namespace htpste
+{
+TEST(PositionTest, RepresentsLongAndShortQuantitiesWithoutPrices)
+{
     const Position longPosition{"AAPL", 12.5};
     const Position shortPosition{"MSFT", -4.0};
 
@@ -19,15 +20,13 @@ TEST(PositionTest, RepresentsLongAndShortQuantitiesWithoutPrices) {
     EXPECT_FALSE(shortPosition.isLong());
 }
 
-TEST(PositionTest, RejectsInvalidInput) {
+TEST(PositionTest, RejectsInvalidInput)
+{
     EXPECT_THROW((Position{"", 1.0}), std::invalid_argument);
     EXPECT_THROW((Position{"   ", 1.0}), std::invalid_argument);
     EXPECT_THROW((Position{"AAPL", 0.0}), std::invalid_argument);
-    EXPECT_THROW(
-        (Position{"AAPL", std::numeric_limits<double>::infinity()}),
-        std::invalid_argument
-    );
+    EXPECT_THROW((Position{"AAPL", std::numeric_limits<double>::infinity()}),
+                 std::invalid_argument);
 }
 
-}  // namespace htpste
-
+} // namespace htpste

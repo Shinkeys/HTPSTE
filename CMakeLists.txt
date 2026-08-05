@@ -11,8 +11,13 @@ add_library(htpste_core
     src/domain/market_state.cpp
     src/domain/portfolio.cpp
     src/domain/position.cpp
+    src/pricing/portfolio_valuation.cpp
+    src/pricing/scenario_repricing.cpp
+    src/risk/risk_metrics.cpp
     src/scenarios/deterministic_scenarios.cpp
     src/scenarios/scenario.cpp
+    src/simulation/simulation_engine.cpp
+    src/validation/simulation_validator.cpp
 )
 add_library(htpste::core ALIAS htpste_core)
 
@@ -22,6 +27,9 @@ target_include_directories(htpste_core
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
 )
+
+add_executable(htpste apps/main.cpp)
+target_link_libraries(htpste PRIVATE htpste::core)
 
 option(HTPSTE_BUILD_TESTS "Build the HTPSTE test suite" ON)
 

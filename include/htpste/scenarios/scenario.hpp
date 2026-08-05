@@ -9,15 +9,18 @@
 #include <string_view>
 #include <unordered_map>
 
-namespace htpste {
-
+namespace htpste
+{
 using PriceShockMap =
-    std::unordered_map<std::string, double, TransparentStringHash, std::equal_to<>>;
+    std::unordered_map<std::string, double, TransparentStringHash,
+                       std::equal_to<>>;
 using ParameterShiftMap =
-    std::unordered_map<std::string, double, TransparentStringHash, std::equal_to<>>;
+    std::unordered_map<std::string, double, TransparentStringHash,
+                       std::equal_to<>>;
 
-class Scenario {
-public:
+class Scenario
+{
+  public:
     virtual ~Scenario() = default;
 
     Scenario(const Scenario&) = default;
@@ -27,27 +30,25 @@ public:
 
     [[nodiscard]] virtual std::string_view name() const noexcept = 0;
 
-    [[nodiscard]] std::optional<double> priceShockFor(std::string_view symbol) const noexcept;
-    [[nodiscard]] std::optional<double> parameterShiftFor(std::string_view name) const noexcept;
-    [[nodiscard]] std::optional<double> stressedPriceFor(
-        std::string_view symbol,
-        double current_price
-    ) const;
+    [[nodiscard]] std::optional<double>
+    priceShockFor(std::string_view symbol) const noexcept;
+    [[nodiscard]] std::optional<double>
+    parameterShiftFor(std::string_view name) const noexcept;
+    [[nodiscard]] std::optional<double>
+    stressedPriceFor(std::string_view symbol, double current_price) const;
 
     [[nodiscard]] const PriceShockMap& priceShocks() const noexcept;
     [[nodiscard]] const ParameterShiftMap& parameterShifts() const noexcept;
 
-protected:
-    explicit Scenario(
-        PriceShockMap price_shocks,
-        ParameterShiftMap parameter_shifts = {}
-    );
+  protected:
+    explicit Scenario(PriceShockMap price_shocks,
+                      ParameterShiftMap parameter_shifts = {});
 
-private:
+  private:
     PriceShockMap m_price_shocks;
     ParameterShiftMap m_parameter_shifts;
 };
 
-}  // namespace htpste
+} // namespace htpste
 
 #endif // SCENARIO_H

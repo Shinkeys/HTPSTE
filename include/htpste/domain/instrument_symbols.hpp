@@ -4,8 +4,8 @@
 #include <array>
 #include <string_view>
 
-namespace htpste::instrument_symbols {
-
+namespace htpste::instrument_symbols
+{
 inline constexpr std::string_view gold{"XAU"};
 inline constexpr std::string_view nvidia{"NVDA"};
 inline constexpr std::string_view apple{"AAPL"};
@@ -29,29 +29,19 @@ inline constexpr std::string_view micron_technology{"MU"};
 inline constexpr std::string_view sp_500{"SPX"};
 
 inline constexpr std::array all{
-    gold,
-    nvidia,
-    apple,
-    alphabet,
-    microsoft,
-    silver,
-    amazon,
-    tsmc,
-    broadcom,
-    saudi_aramco,
-    spacex,
-    meta,
-    bitcoin,
-    tesla,
-    samsung,
-    berkshire_hathaway,
-    eli_lilly,
-    vanguard_sp_500_etf,
-    jpmorgan_chase,
-    micron_technology,
+    gold,           nvidia,
+    apple,          alphabet,
+    microsoft,      silver,
+    amazon,         tsmc,
+    broadcom,       saudi_aramco,
+    spacex,         meta,
+    bitcoin,        tesla,
+    samsung,        berkshire_hathaway,
+    eli_lilly,      vanguard_sp_500_etf,
+    jpmorgan_chase, micron_technology,
     sp_500,
 };
 
-}  // namespace htpste::instrument_symbols
+} // namespace htpste::instrument_symbols
 
 #endif // INSTRUMENT_SYMBOLS_H

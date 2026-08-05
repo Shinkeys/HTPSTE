@@ -3,11 +3,12 @@
 
 #include <string>
 
-namespace htpste {
-
+namespace htpste
+{
 // An equity holding. Market data lives outside this type.
-class Position final {
-public:
+class Position final
+{
+  public:
     Position(std::string symbol, double quantity);
 
     [[nodiscard]] const std::string& symbol() const noexcept;
@@ -15,11 +16,11 @@ public:
     [[nodiscard]] bool isLong() const noexcept;
     [[nodiscard]] bool isShort() const noexcept;
 
-private:
+  private:
     std::string m_symbol;
     double m_quantity;
 };
 
-}  // namespace htpste
+} // namespace htpste
 
 #endif // POSITION_H
