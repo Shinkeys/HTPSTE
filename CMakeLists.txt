@@ -74,4 +74,20 @@ if(HTPSTE_BUILD_TESTS)
     FetchContent_MakeAvailable(googletest)
 
     add_subdirectory(tests)
+
+    add_test(
+        NAME htpste_cli_help
+        COMMAND htpste --help
+    )
+    add_test(
+        NAME htpste_cli_simulation_job
+        COMMAND htpste
+            --market-model ${PROJECT_SOURCE_DIR}/python/market_model.json
+            --scenarios 16
+            --seed 42
+            --threads 2
+    )
+    set_tests_properties(htpste_cli_simulation_job PROPERTIES
+        PASS_REGULAR_EXPRESSION "Job 0 complete"
+    )
 endif()
