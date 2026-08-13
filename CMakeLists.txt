@@ -7,6 +7,10 @@ project(
     LANGUAGES CXX
 )
 
+option(HTPSTE_BUILD_TESTS "Build the HTPSTE test suite" ON)
+option(HTPSTE_ENABLE_SANITIZERS
+       "Enable AddressSanitizer and UndefinedBehaviorSanitizer" OFF)
+
 include(FetchContent)
 find_package(Threads REQUIRED)
 
@@ -22,7 +26,14 @@ FetchContent_Declare(
     GIT_TAG 3.4.0
     GIT_SHALLOW TRUE
 )
+
+# Eigen uses the generic BUILD_TESTING option for its own large test suite.
+# Keep dependency tests and documentation out of HTPSTE builds
+set(BUILD_TESTING OFF CACHE BOOL "Build dependency test suites" FORCE)
+set(EIGEN_BUILD_DOC OFF CACHE BOOL "Build Eigen documentation" FORCE)
 FetchContent_MakeAvailable(nlohmann_json eigen)
+unset(BUILD_TESTING CACHE)
+unset(EIGEN_BUILD_DOC CACHE)
 
 add_library(htpste_core
     src/domain/market_state.cpp
@@ -42,6 +53,25 @@ add_library(htpste_core
 )
 add_library(htpste::core ALIAS htpste_core)
 
+if(HTPSTE_ENABLE_SANITIZERS)
+    if(NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+        message(FATAL_ERROR
+            "HTPSTE sanitizers require a Clang or GNU compiler")
+    endif()
+
+    add_library(htpste_sanitizers INTERFACE)
+    target_compile_options(htpste_sanitizers
+        INTERFACE
+            -fsanitize=address,undefined
+            -fno-omit-frame-pointer
+            -fno-sanitize-recover=all
+    )
+    target_link_options(htpste_sanitizers
+        INTERFACE -fsanitize=address,undefined
+    )
+    target_link_libraries(htpste_core PUBLIC htpste_sanitizers)
+endif()
+
 target_compile_features(htpste_core PUBLIC cxx_std_20)
 target_include_directories(htpste_core
     PUBLIC
@@ -58,8 +88,6 @@ target_link_libraries(htpste_core
 
 add_executable(htpste apps/main.cpp)
 target_link_libraries(htpste PRIVATE htpste::core)
-
-option(HTPSTE_BUILD_TESTS "Build the HTPSTE test suite" ON)
 
 if(HTPSTE_BUILD_TESTS)
     include(CTest)
@@ -82,7 +110,8 @@ if(HTPSTE_BUILD_TESTS)
     add_test(
         NAME htpste_cli_simulation_job
         COMMAND htpste
-            --market-model ${PROJECT_SOURCE_DIR}/python/market_model.json
+            --market-model
+                ${PROJECT_SOURCE_DIR}/tests/fixtures/market_model.json
             --scenarios 16
             --seed 42
             --threads 2
