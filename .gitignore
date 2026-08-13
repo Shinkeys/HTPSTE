@@ -1,0 +1,72 @@
+# CMake, Ninja, and local build trees
+/build/
+/out/
+/_build/
+/build-*/
+/cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+CMakeUserPresets.json
+CTestTestfile.cmake
+Testing/
+cmake_install.cmake
+compile_commands.json
+build.ninja
+rules.ninja
+.ninja_deps
+.ninja_log
+_deps/
+
+# Compiled binaries and libraries
+*.a
+*.dll
+*.dylib
+*.exe
+*.lib
+*.o
+*.obj
+*.so
+*.so.*
+
+# Test, sanitizer, profiling, and coverage output
+*.gcda
+*.gcno
+*.gcov
+*.profdata
+*.profraw
+coverage/
+*.log
+
+# Generated application data and results
+/python/market_model.json
+/results/
+
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local editor and IDE state
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Local agent and tool state
+.agents/
+.codex/
+.cache/
+
+# Local environment files and secrets
+.env
+.env.*
+!.env.example
+
+# Operating-system metadata
+.DS_Store
+Thumbs.db
