@@ -1,4 +1,5 @@
 add_executable(htpste_domain_tests
+    market_model_loader_test.cpp
     market_state_test.cpp
     portfolio_test.cpp
     portfolio_valuation_test.cpp
@@ -14,6 +15,10 @@ target_link_libraries(htpste_domain_tests
     PRIVATE
         htpste::core
         GTest::gtest_main
+)
+
+target_compile_definitions(htpste_domain_tests
+    PRIVATE HTPSTE_SOURCE_DIR="${PROJECT_SOURCE_DIR}"
 )
 
 include(GoogleTest)

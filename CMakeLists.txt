@@ -7,8 +7,27 @@ project(
     LANGUAGES CXX
 )
 
+include(FetchContent)
+find_package(Threads REQUIRED)
+
+FetchContent_Declare(
+    nlohmann_json
+    GIT_REPOSITORY https://github.com/nlohmann/json.git
+    GIT_TAG v3.11.3
+    GIT_SHALLOW TRUE
+)
+FetchContent_Declare(
+    eigen
+    GIT_REPOSITORY https://gitlab.com/libeigen/eigen.git
+    GIT_TAG 3.4.0
+    GIT_SHALLOW TRUE
+)
+FetchContent_MakeAvailable(nlohmann_json eigen)
+
 add_library(htpste_core
     src/domain/market_state.cpp
+    src/market/market_model.cpp
+    src/market/market_model_loader.cpp
     src/domain/portfolio.cpp
     src/domain/position.cpp
     src/pricing/portfolio_valuation.cpp
@@ -27,6 +46,13 @@ target_include_directories(htpste_core
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
 )
+target_link_libraries(htpste_core
+    PUBLIC
+        Eigen3::Eigen
+    PRIVATE
+        Threads::Threads
+        nlohmann_json::nlohmann_json
+)
 
 add_executable(htpste apps/main.cpp)
 target_link_libraries(htpste PRIVATE htpste::core)
@@ -35,7 +61,6 @@ option(HTPSTE_BUILD_TESTS "Build the HTPSTE test suite" ON)
 
 if(HTPSTE_BUILD_TESTS)
     include(CTest)
-    include(FetchContent)
 
     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
     FetchContent_Declare(
