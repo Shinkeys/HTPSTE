@@ -1,6 +1,7 @@
 add_executable(htpste_domain_tests
     market_model_loader_test.cpp
     market_state_test.cpp
+    monte_carlo_scenario_generator_test.cpp
     portfolio_test.cpp
     portfolio_valuation_test.cpp
     position_test.cpp

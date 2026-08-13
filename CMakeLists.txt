@@ -34,6 +34,8 @@ add_library(htpste_core
     src/pricing/scenario_repricing.cpp
     src/risk/risk_metrics.cpp
     src/scenarios/deterministic_scenarios.cpp
+    src/scenarios/monte_carlo_scenario.cpp
+    src/scenarios/monte_carlo_scenario_generator.cpp
     src/scenarios/scenario.cpp
     src/simulation/simulation_engine.cpp
     src/validation/simulation_validator.cpp
