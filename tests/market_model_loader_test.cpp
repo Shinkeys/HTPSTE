@@ -91,14 +91,15 @@ TEST(MarketModelLoaderTest, RejectsNonPositiveDefiniteCovariance)
                  std::invalid_argument);
 }
 
-TEST(MarketModelLoaderTest, LoadsGeneratedPythonMarketModel)
+TEST(MarketModelLoaderTest, LoadsDeterministicMarketModelFixture)
 {
     const MarketModel model = MarketModelLoader{}.loadFromFile(
-        HTPSTE_SOURCE_DIR "/python/market_model.json");
+        HTPSTE_SOURCE_DIR "/tests/fixtures/market_model.json");
 
-    EXPECT_EQ(model.assetCount(), 15U);
+    EXPECT_EQ(model.assetCount(), 2U);
     EXPECT_EQ(model.symbols()[0], "AAPL");
-    EXPECT_GT(model.prices()[0], 0.0);
+    EXPECT_EQ(model.symbols()[1], "MSFT");
+    EXPECT_DOUBLE_EQ(model.prices()[0], 100.0);
 }
 
 } // namespace htpste

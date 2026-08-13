@@ -1,0 +1,14 @@
+{
+    "schema_version": 1,
+    "as_of": "2024-01-02",
+    "horizon_days": 1,
+    "return_model": "lognormal",
+    "symbols": ["AAPL", "MSFT"],
+    "prices": [100.0, 200.0],
+    "mean_log_returns": [0.001, -0.002],
+    "covariance": [
+        [0.04, 0.01],
+        [0.01, 0.09]
+    ],
+    "observations": 252
+}
