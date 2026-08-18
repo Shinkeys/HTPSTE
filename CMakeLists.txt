@@ -7,6 +7,9 @@ project(
     LANGUAGES CXX
 )
 
+# Option to keep clang-based editors in sync with real build flags
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 option(HTPSTE_BUILD_TESTS "Build the HTPSTE test suite" ON)
 option(HTPSTE_ENABLE_SANITIZERS
        "Enable AddressSanitizer and UndefinedBehaviorSanitizer" OFF)
